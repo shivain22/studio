@@ -38,7 +38,7 @@ function RegisterPageContent() {
            <CardContent className="text-center">
              <p className="text-muted-foreground mb-4">Registration is currently only available for Farmers.</p>
              <Link href="/" passHref legacyBehavior>
-               <Button variant="outline">Back to Home</Button>
+               <Button variant="outline">Back to Login</Button>
              </Link>
            </CardContent>
          </Card>
@@ -88,13 +88,15 @@ function RegisterPageContent() {
             </form>
              <div className="mt-4 text-center text-sm">
                 Already have an account?{' '}
-                <Link href={`/auth/login?role=${role}`} className="underline text-primary hover:text-primary/80">
+                {/* Update login link to point to root with role param */}
+                <Link href={`/?role=${role}`} className="underline text-primary hover:text-primary/80">
                   Login here
                 </Link>
               </div>
                <div className="mt-2 text-center text-sm">
+                   {/* Update "Back to Role Selection" text and ensure link points to root */}
                    <Link href="/" className="underline text-muted-foreground hover:text-foreground">
-                      Back to Role Selection
+                      Back to Login
                    </Link>
               </div>
           </CardContent>

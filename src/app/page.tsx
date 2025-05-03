@@ -1,65 +1,92 @@
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import Image from 'next/image';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Sprout } from 'lucide-react';
 
-export default function Home() {
+function LoginPageContent() {
+  const searchParams = useSearchParams();
+  const role = searchParams.get('role') || 'farmer'; // Default to 'farmer' if no role specified
+
+  // Convert role slug to a display-friendly format
+  const displayRole = role
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+  const isFarmer = role === 'farmer';
+
+  const handleLogin = (event: React.FormEvent) => {
+    event.preventDefault();
+    // Placeholder for login logic
+    console.log(`Attempting login for role: ${role}`);
+    // Redirect to the appropriate dashboard based on role after successful login
+    // For now, redirecting to a placeholder dashboard
+    window.location.href = `/dashboard/${role}`;
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-secondary">
-      <header className="p-4 bg-primary text-primary-foreground flex justify-between items-center shadow-md">
-        <div className="flex items-center gap-2">
+       <header className="p-4 bg-primary text-primary-foreground flex justify-between items-center shadow-md">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
           <Sprout className="h-8 w-8" />
           <h1 className="text-2xl font-bold">RiceWise AWD</h1>
-        </div>
-        {/* Placeholder for future navigation or user actions if needed */}
+        </Link>
       </header>
 
       <main className="flex-grow flex items-center justify-center p-4">
         <Card className="w-full max-w-md shadow-lg">
-          <CardHeader className="items-center">
-            <Image
-              src="https://picsum.photos/400/200"
-              alt="Rice Paddy Field"
-              data-ai-hint="rice paddy field agriculture"
-              width={400}
-              height={200}
-              className="rounded-t-lg mb-4 object-cover"
-            />
-            <CardTitle className="text-2xl text-center">Welcome to RiceWise AWD</CardTitle>
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">{displayRole} Login</CardTitle>
             <CardDescription className="text-center">
-              Efficiently manage Alternate Wetting and Drying for sustainable rice cultivation.
+              Enter your credentials to access your dashboard. Use URL parameter `?role=[role-name]` to change role (e.g., ?role=field-agent).
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-4 items-center">
-            <p className="text-muted-foreground text-center">Please select your role to proceed:</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-               <Link href="/auth/login?role=farmer" passHref legacyBehavior>
-                  <Button className="w-full" variant="default">Farmer Login/Register</Button>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email / Phone Number</Label>
+                <Input id="email" type="text" placeholder="Enter your email or phone" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input id="password" type="password" placeholder="Enter your password" required />
+              </div>
+              <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                Login
+              </Button>
+            </form>
+            {isFarmer && (
+              <div className="mt-4 text-center text-sm">
+                Don&apos;t have an account?{' '}
+                <Link href={`/auth/register?role=${role}`} className="underline text-primary hover:text-primary/80">
+                  Register here
                 </Link>
-               <Link href="/auth/login?role=field-agent" passHref legacyBehavior>
-                  <Button className="w-full" variant="outline">Field Agent Login</Button>
-                </Link>
-                <Link href="/auth/login?role=supervisor" passHref legacyBehavior>
-                   <Button className="w-full" variant="outline">Supervisor Login</Button>
-                 </Link>
-                 <Link href="/auth/login?role=local-partner" passHref legacyBehavior>
-                   <Button className="w-full" variant="outline">Local Partner Login</Button>
-                 </Link>
-                 <Link href="/auth/login?role=aurigraph-spox" passHref legacyBehavior>
-                   <Button className="w-full" variant="outline">Aurigraph Spox Login</Button>
-                 </Link>
-                 <Link href="/auth/login?role=vvb" passHref legacyBehavior>
-                   <Button className="w-full" variant="outline">VVB Login</Button>
-                 </Link>
-            </div>
+              </div>
+            )}
+            {/* Removed "Back to Role Selection" link as '/' is now the login page driven by role parameter */}
           </CardContent>
         </Card>
       </main>
 
-      <footer className="p-4 text-center text-muted-foreground text-sm">
-        © {new Date().getFullYear()} RiceWise AWD. All rights reserved.
-      </footer>
+       <footer className="p-4 text-center text-muted-foreground text-sm">
+         © {new Date().getFullYear()} RiceWise AWD. All rights reserved.
+       </footer>
     </div>
   );
+}
+
+
+export default function LoginPage() {
+  return (
+    // Wrap with Suspense because useSearchParams needs it
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginPageContent />
+    </Suspense>
+  )
 }
