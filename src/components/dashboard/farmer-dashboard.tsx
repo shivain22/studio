@@ -35,9 +35,9 @@ export function FarmerDashboard() {
            {plots.length === 0 ? (
              <div className="text-center py-4">
                 <p className="text-muted-foreground mb-2">You haven't registered any plots yet.</p>
-                 <Link href="/dashboard/farmer/plots/register" passHref legacyBehavior>
+                 <Link href="/dashboard/farmer/plots/add-map" passHref legacyBehavior>
                     <Button>
-                      <PlusCircle className="mr-2 h-4 w-4" /> Register Your First Plot
+                      <PlusCircle className="mr-2 h-4 w-4" /> Add Your First Plot
                     </Button>
                 </Link>
             </div>
@@ -54,9 +54,9 @@ export function FarmerDashboard() {
                   </Link>
                 </div>
               ))}
-               <Link href="/dashboard/farmer/plots/register" passHref legacyBehavior>
+               <Link href="/dashboard/farmer/plots/add-map" passHref legacyBehavior>
                   <Button variant="default" className="mt-4 w-full sm:w-auto">
-                    <PlusCircle className="mr-2 h-4 w-4" /> Register New Plot
+                    <PlusCircle className="mr-2 h-4 w-4" /> Add New Plot
                   </Button>
               </Link>
             </div>

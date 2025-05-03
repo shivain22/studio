@@ -46,9 +46,9 @@ export default function MyPlotsPage() {
              <CardTitle className="flex items-center gap-2"><MapPin className="h-6 w-6 text-primary"/> My Registered Plots</CardTitle>
              <CardDescription>View the status of your submitted plots.</CardDescription>
            </div>
-            <Link href="/dashboard/farmer/plots/register" passHref legacyBehavior>
+            <Link href="/dashboard/farmer/plots/add-map" passHref legacyBehavior>
                <Button>
-                 <PlusCircle className="mr-2 h-4 w-4" /> Register New Plot
+                 <PlusCircle className="mr-2 h-4 w-4" /> Add New Plot
                </Button>
             </Link>
         </CardHeader>
@@ -56,9 +56,9 @@ export default function MyPlotsPage() {
           {plots.length === 0 ? (
              <div className="text-center py-8">
                 <p className="text-muted-foreground mb-4">You haven't registered any plots yet.</p>
-                 <Link href="/dashboard/farmer/plots/register" passHref legacyBehavior>
+                 <Link href="/dashboard/farmer/plots/add-map" passHref legacyBehavior>
                     <Button>
-                      <PlusCircle className="mr-2 h-4 w-4" /> Register Your First Plot
+                      <PlusCircle className="mr-2 h-4 w-4" /> Add Your First Plot
                     </Button>
                 </Link>
             </div>
